@@ -1,5 +1,99 @@
 @import "tailwindcss";
 
+/* GLOBAL HTML */
 html {
   scroll-behavior: smooth;
+}
+
+/* ARTICLE WRAPPER */
+.article {
+  @apply flex flex-col gap-4 text-base md:text-lg leading-relaxed tracking-wide w-full;
+  word-break: break-word; /* Wrap long words or URLs */
+}
+
+/* HEADINGS */
+.article > h1 {
+  @apply text-3xl md:text-4xl font-bold tracking-tight mt-6 mb-4;
+}
+
+.article > h2 {
+  @apply text-2xl md:text-3xl font-semibold tracking-tight mt-6 mb-3;
+}
+
+.article > h3 {
+  @apply text-xl md:text-2xl font-medium mt-4 mb-2;
+}
+
+.article > h4,
+.article > h5,
+.article > h6 {
+  @apply text-lg md:text-xl font-medium mt-3 mb-1;
+}
+
+/* PARAGRAPHS */
+.article > p {
+  @apply leading-relaxed text-gray-300 dark:text-gray-200;
+  word-break: break-word;
+}
+
+/* LISTS */
+.article > ul,
+.article > ol {
+  @apply flex flex-col gap-2 ml-6 md:ml-10;
+}
+
+.article > ul {
+  @apply list-disc;
+}
+
+.article > ol {
+  @apply list-decimal;
+}
+
+/* BLOCKQUOTE */
+.article > blockquote {
+  @apply pl-4 md:pl-5 italic border-l-2 border-neutral-600/40 text-neutral-400 dark:text-neutral-300;
+  @apply bg-neutral-900/20 dark:bg-neutral-800/30 rounded-lg;
+}
+
+/* CODE BLOCKS */
+.article > pre {
+  @apply bg-neutral-900 text-neutral-100 p-4 md:p-5 rounded-lg overflow-x-auto text-sm md:text-base;
+}
+
+.article code {
+  @apply bg-neutral-800 text-neutral-100 px-1 py-0.5 rounded break-all;
+  font-family: monospace;
+  font-size: 0.875rem;
+}
+
+/* IMAGES */
+.article img {
+  @apply max-w-full h-auto mx-auto rounded-lg shadow-md;
+}
+
+/* TABLES */
+.article table {
+  @apply w-full overflow-x-auto block border-collapse border border-neutral-700 rounded-lg;
+}
+
+.article th,
+.article td {
+  @apply border border-neutral-700 px-3 py-2 text-left;
+}
+
+/* LINKS */
+.article a {
+  @apply text-cyan-400 hover:text-cyan-300 underline;
+}
+
+/* RESPONSIVE WRAPPER FOR SCROLLABLE ELEMENTS */
+.article pre,
+.article table {
+  @apply overflow-x-auto;
+}
+
+/* MISC */
+.article hr {
+  @apply my-6 border-t border-neutral-700;
 }
