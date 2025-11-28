@@ -3,9 +3,10 @@
 import Image from "next/image";
 import { motion, useTransform, useScroll } from "framer-motion";
 import React, { useRef } from "react";
-import { Download } from "lucide-react";
+import { ArrowBigRight, Download } from "lucide-react";
+import Link from "next/link";
 
-export default function Hero() {
+export default function BlogHeroSection() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -15,15 +16,6 @@ export default function Hero() {
   const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
-
-  const handleDownloadCV = () => {
-    const link = document.createElement("a");
-    link.href = "/cv/Software-Engineer-Yenadh-Weerasooriya.pdf";
-    link.download = "Software-Engineer-Yenadh-Weerasooriya.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
 
   return (
     <section
@@ -79,7 +71,7 @@ export default function Hero() {
               viewport={{ once: false, amount: 0.3 }}
               className="mt-6 text-white text-base sm:text-lg md:text-xl leading-relaxed sm:leading-loose"
             >
-              Software Engineer
+              Welcome to My Digital Space
             </motion.p>
 
             <motion.div
@@ -118,10 +110,13 @@ export default function Hero() {
               viewport={{ once: false, amount: 0.3 }}
               className="mt-4 text-white leading-relaxed sm:leading-loose"
             >
-              I’m a <span className="text-violet-600">Software Engineer</span>{" "}
-              passionate about building clean, efficient, and user-focused
-              applications. I love turning ideas into scalable digital solutions
-              that balance creativity and performance.
+              This is{" "}
+              <span className="text-violet-600">my space to dive deep</span>{" "}
+              into the world of modern development — exploring code
+              architecture, performance optimization, API design, and UI/UX best
+              practices. Whether you’re a beginner or a seasoned engineer,
+              you’ll find tutorials, tips, and thought pieces to sharpen your
+              craft and stay ahead in tech.
             </motion.p>
           </div>
 
@@ -133,13 +128,13 @@ export default function Hero() {
             viewport={{ once: false, amount: 0.3 }}
             className="mt-8 flex justify-center sm:justify-start w-full"
           >
-            <button
-              onClick={handleDownloadCV}
+            <Link
+              href="/"
               className="w-full px-6 py-3 border-2 border-white text-white font-medium rounded-lg hover:bg-white hover:text-black transition-all duration-300 flex items-center justify-center gap-2"
             >
-              <span>Download My CV</span>
-              <Download className="w-5 h-5" />
-            </button>
+              <span>Learn About Me</span>
+              <ArrowBigRight className="w-5 h-5" />
+            </Link>
           </motion.div>
         </div>
       </motion.div>
