@@ -12,7 +12,6 @@ export default function ExperienceAndEducation() {
     {
       question: "Professional Experience",
       answer: [
-        "Web Developer / IT Support (Part-Time) – Ahava Middle East, UAE – July 2025",
         "Software Engineer – Innovative-e Private Limited, Sri Lanka – March 2024 to May 2025",
       ],
     },
