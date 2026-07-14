@@ -39,21 +39,21 @@ export default function StoryCategories({ items, loading }) {
 
   return (
     <div
-      className="px-5 py-20 lg:px-20 xl:px-40 bg-linear-to-b from-black via-gray-900 to-black text-white"
+      className="section-shell px-5 py-20 lg:px-20 xl:px-40 text-white"
       ref={ref}
     >
-      {/* Section Heading */}
       <div className="text-center mb-14">
         <motion.h1
           className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl mb-4 text-white tracking-tight"
+          style={{ fontFamily: "var(--font-display), sans-serif" }}
           initial={{ opacity: 0, y: -30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -30 }}
           transition={{ duration: 0.8 }}
         >
-          Explore My <span className="text-violet-600">Blog</span>
+          Explore My <span className="neon-text">Blog</span>
         </motion.h1>
         <motion.p
-          className="text-white text-sm sm:text-base max-w-2xl mx-auto leading-relaxed"
+          className="text-[var(--muted)] text-sm sm:text-base max-w-2xl mx-auto leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -81,7 +81,7 @@ export default function StoryCategories({ items, loading }) {
                 {item.status ? (
                   <Link
                     href={`/blog/${item._id}`}
-                    className="group block overflow-hidden rounded-2xl bg-gray-900/70 backdrop-blur border border-gray-800 hover:border-violet-600 transition-all duration-500 hover:shadow-[0_0_20px_rgba(139,92,246,0.3)] h-full relative"
+                    className="group block overflow-hidden neon-panel hover:border-[var(--neon)] transition-colors duration-300 h-full relative"
                   >
                     <div className="relative w-full h-52 overflow-hidden rounded-t-2xl">
                       <Image
@@ -93,21 +93,21 @@ export default function StoryCategories({ items, loading }) {
                       <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500"></div>
                     </div>
                     <div className="p-6">
-                      <h2 className="text-xl font-semibold mb-2 group-hover:text-violet-600 transition-colors">
+                      <h2 className="text-xl font-semibold mb-2 group-hover:text-[var(--neon)] transition-colors">
                         {item.category}
                       </h2>
-                      <p className="text-sm leading-relaxed text-gray-300">
+                      <p className="text-sm leading-relaxed text-[var(--muted)]">
                         {item.description}
                       </p>
                     </div>
                     <div className="px-6 pb-6">
-                      <span className="inline-block mt-3 text-sm font-medium text-violet-600 group-hover:text-white transition-colors">
+                      <span className="inline-block mt-3 text-sm font-medium text-[var(--neon)]">
                         Read More →
                       </span>
                     </div>
                   </Link>
                 ) : (
-                  <div className="group block cursor-not-allowed overflow-hidden rounded-2xl bg-gray-900/70 backdrop-blur border border-gray-800 h-full relative">
+                  <div className="group block cursor-not-allowed overflow-hidden neon-panel h-full relative">
                     <div className="relative w-full h-52 overflow-hidden rounded-t-2xl">
                       <Image
                         src={item.image[0]}

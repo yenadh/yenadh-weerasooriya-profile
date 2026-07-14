@@ -1,20 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useTransform, useScroll } from "framer-motion";
-import React, { useRef } from "react";
-import { Download } from "lucide-react";
+import { motion } from "framer-motion";
+import { Download, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { useApp } from "@/context/AppContext";
+import Tilt3D from "@/components/Tilt3D";
+import WireCube3D from "@/components/WireCube3D";
 
 export default function Hero() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
+  const { t } = useApp();
 
   const handleDownloadCV = () => {
     const link = document.createElement("a");
@@ -26,123 +21,112 @@ export default function Hero() {
   };
 
   return (
-    <section
-      ref={ref}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black py-20 px-5 sm:px-10 md:px-20 xl:px-40"
-    >
-      {/* Background Video */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-      >
-        <source
-          src="/background/2792967-uhd_2160_1440_25fps.mp4"
-          type="video/mp4"
-        />
-        Your browser does not support the video tag.
-      </video>
+    <section className="section-shell relative min-h-screen flex items-center overflow-hidden py-28 px-5 sm:px-10 md:px-20 xl:px-40">
+      <WireCube3D className="top-[18%] end-[8%] hidden lg:block" />
+      <WireCube3D className="bottom-[22%] start-[6%] hidden md:block scale-75 opacity-40" />
 
-      <motion.div
-        style={{ y, opacity, scale }}
-        className="flex gap-10 flex-col lg:flex-row-reverse items-center justify-center"
-      >
-        {/* Right Image */}
-        <div className="relative w-full lg:w-1/2 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/20 z-10" />
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 40 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-            viewport={{ once: false, amount: 0.2 }}
-            className="relative w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 z-20"
+      <div className="w-full flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-16">
+        <div className="w-full lg:w-[55%]">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-[var(--neon)] text-sm sm:text-base tracking-[0.25em] uppercase"
+            style={{ fontFamily: "var(--font-display), sans-serif" }}
           >
-            <Image
-              src="/images/profile-image-yenadh-dark.png"
-              alt="Profile photo"
-              fill
-              className="shadow-lg object-cover"
-            />
-          </motion.div>
-        </div>
+            {t.hero.role}
+          </motion.p>
 
-        {/* Left Text */}
-        <div className="relative z-20 w-full lg:w-1/2">
-          <div className="max-w-5xl">
-            <motion.p
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: false, amount: 0.3 }}
-              className="mt-6 text-white text-base sm:text-lg md:text-xl leading-relaxed sm:leading-loose"
-            >
-              Software Engineer
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: false, amount: 0.3 }}
-              className="border-b border-violet-600"
-            />
-
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              viewport={{ once: false, amount: 0.3 }}
-              className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-white leading-snug md:leading-tight"
-            >
-              Hello I'm
-            </motion.h1>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              viewport={{ once: false, amount: 0.3 }}
-              className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-white leading-snug md:leading-tight"
-            >
-              Keshawa Sri{" "}
-              <span className="text-violet-600">Yenadh Weerasooriya</span>
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-              viewport={{ once: false, amount: 0.3 }}
-              className="mt-4 text-white leading-relaxed sm:leading-loose"
-            >
-              I’m a <span className="text-violet-600">Software Engineer</span>{" "}
-              passionate about building clean, efficient, and user-focused
-              applications. I love turning ideas into scalable digital solutions
-              that balance creativity and performance.
-            </motion.p>
-          </div>
-
-          {/* ✅ Centered Button with Download Function */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-            viewport={{ once: false, amount: 0.3 }}
-            className="mt-8 flex justify-center sm:justify-start w-full"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="mt-3 h-px w-24 origin-start bg-[var(--neon)]"
+            style={{ boxShadow: "0 0 12px var(--neon-glow)" }}
+          />
+
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.2 }}
+            className="mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight tracking-tight heading-fg"
+            style={{ fontFamily: "var(--font-display), sans-serif" }}
           >
-            <button
-              onClick={handleDownloadCV}
-              className="w-full px-6 py-3 border-2 border-white text-white font-medium rounded-lg hover:bg-white hover:text-black transition-all duration-300 flex items-center justify-center gap-2"
-            >
-              <span>Download My CV</span>
-              <Download className="w-5 h-5" />
+            {t.hero.nameFirst}
+            <br />
+            <span className="neon-text">{t.hero.nameLast}</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.35 }}
+            className="mt-5 max-w-xl text-[var(--muted)] text-base sm:text-lg leading-relaxed"
+          >
+            {t.hero.subtitle}
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.5 }}
+            className="mt-8 flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
+          >
+            <button onClick={handleDownloadCV} className="neon-btn w-full sm:w-auto">
+              <span>{t.hero.downloadCv}</span>
+              <Download className="w-4 h-4" />
             </button>
+            <Link
+              href="/#stack"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-[var(--line)] heading-fg hover:border-[var(--neon)] hover:text-[var(--neon)] transition-colors duration-300"
+            >
+              {t.hero.viewLab}
+              <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+            </Link>
           </motion.div>
         </div>
-      </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.25 }}
+          className="relative w-full lg:w-[45%] flex items-center justify-center"
+        >
+          <div
+            className="absolute w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full"
+            style={{
+              background:
+                "radial-gradient(circle, var(--neon-glow) 0%, transparent 70%)",
+              filter: "blur(28px)",
+            }}
+          />
+
+          <Tilt3D
+            className="float-soft relative w-44 h-44 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-80 lg:h-80"
+            maxTilt={16}
+          >
+            <div className="holo-frame w-full h-full neon-border p-1">
+              <span className="holo-frame__ring" aria-hidden="true" />
+              <span className="holo-frame__corner holo-frame__corner--tl" />
+              <span className="holo-frame__corner holo-frame__corner--tr" />
+              <span className="holo-frame__corner holo-frame__corner--bl" />
+              <span className="holo-frame__corner holo-frame__corner--br" />
+              <div className="relative w-full h-full overflow-hidden">
+                <Image
+                  src="/images/profile-image-yenadh-dark.png"
+                  alt={t.hero.alt}
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 240px, 320px"
+                  className="object-cover"
+                />
+              </div>
+              <span className="absolute -top-px start-4 end-4 h-px bg-[var(--neon)] opacity-80" />
+              <span className="absolute -bottom-px start-8 end-8 h-px bg-[var(--neon)] opacity-50" />
+            </div>
+          </Tilt3D>
+        </motion.div>
+      </div>
     </section>
   );
 }

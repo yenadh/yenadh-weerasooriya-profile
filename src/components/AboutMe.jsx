@@ -1,71 +1,79 @@
 "use client";
 import { motion } from "framer-motion";
+import { useApp } from "@/context/AppContext";
+import Tilt3D from "@/components/Tilt3D";
 
 export default function AboutMe() {
+  const { t } = useApp();
+  const about = t.about;
+
   return (
-    <section className="relative flex flex-col lg:flex-row items-center gap-10 xl:min-h-screen z-10 bg-black py-16 px-5 sm:px-10 md:px-20 xl:px-40 overflow-hidden">
-      {/* Left Column */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-      >
-        <source
-          src="/background/2792967-uhd_2160_1440_25fps.mp4"
-          type="video/mp4"
-        />
-        Your browser does not support the video tag.
-      </video>
-      <div className="relative z-10 w-full lg:w-1/2 text-white mb-10 lg:mb-0">
-        <motion.h1
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: false, amount: 0.3 }}
-          className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold"
-        >
-          Who is <span className="text-violet-600">Yenadh Weerasooriya?</span>
-        </motion.h1>
+    <section className="section-shell relative flex flex-col lg:flex-row items-center gap-12 xl:min-h-[80vh] py-20 px-5 sm:px-10 md:px-20 xl:px-40">
+      <div className="w-full lg:w-1/2">
         <motion.p
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          viewport={{ once: false, amount: 0.3 }}
-          className="mt-4 text-white leading-relaxed sm:leading-loose text-sm sm:text-base md:text-lg"
+          transition={{ duration: 0.45 }}
+          viewport={{ once: true, amount: 0.3 }}
+          className="text-[var(--neon)] text-sm tracking-[0.2em] uppercase mb-3"
+          style={{ fontFamily: "var(--font-display), sans-serif" }}
         >
-          I am a 21-year-old software engineer currently pursuing an MBA in Data
-          Analytics and AI in the UAE. I specialize in full-stack development,
-          building web and mobile applications, and working with technologies
-          like <span className="text-violet-600">React, Node.js,</span> and{" "}
-          <span className="text-violet-600">Django.</span> Passionate about
-          creating efficient and scalable software solutions, I enjoy turning
-          ideas into real-world applications that make an impact.
+          {about.eyebrow}
+        </motion.p>
+        <motion.h2
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true, amount: 0.3 }}
+          className="text-3xl sm:text-4xl lg:text-5xl font-semibold heading-fg"
+          style={{ fontFamily: "var(--font-display), sans-serif" }}
+        >
+          {about.titleBefore}{" "}
+          <span className="neon-text">{about.titleAccent}</span>
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+          viewport={{ once: true, amount: 0.3 }}
+          className="mt-5 text-[var(--muted)] leading-relaxed text-sm sm:text-base md:text-lg"
+        >
+          {about.p1}
+        </motion.p>
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          viewport={{ once: true, amount: 0.3 }}
+          className="mt-4 text-[var(--muted)] leading-relaxed text-sm sm:text-base md:text-lg"
+        >
+          {about.p2}
         </motion.p>
       </div>
 
-      {/* Right Column - Stats */}
-      <div className="w-full lg:w-1/2 text-white relative z-10">
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-6">
-          {[
-            { value: "3+", label: "Experience" },
-            { value: "20+", label: "Projects" },
-            { value: "8+", label: "Technologies" },
-            { value: "6+", label: "Clients" },
-          ].map((item) => (
+      <div className="w-full lg:w-1/2">
+        <div className="grid grid-cols-2 gap-4 sm:gap-6">
+          {about.stats.map((item, i) => (
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              viewport={{ once: false, amount: 0.3 }}
+              transition={{ delay: i * 0.08, duration: 0.45 }}
+              viewport={{ once: true, amount: 0.3 }}
               key={item.label}
-              className="flex flex-col border border-white rounded-lg p-6 bg-white/5 hover:bg-violet-600/20 transition-all duration-300"
             >
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-violet-500">
-                {item.value}
-              </h2>
-              <span className="mt-2 text-sm sm:text-base">{item.label}</span>
+              <Tilt3D maxTilt={10} scale={1.04}>
+                <div className="neon-panel flex flex-col p-5 sm:p-6 hover:border-[var(--neon)] transition-colors duration-300 h-full">
+                  <h3
+                    className="text-3xl sm:text-4xl md:text-5xl font-semibold neon-text"
+                    style={{ fontFamily: "var(--font-display), sans-serif" }}
+                  >
+                    {item.value}
+                  </h3>
+                  <span className="mt-2 text-sm sm:text-base text-[var(--muted)]">
+                    {item.label}
+                  </span>
+                </div>
+              </Tilt3D>
             </motion.div>
           ))}
         </div>

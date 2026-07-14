@@ -4,151 +4,123 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
+import { useApp } from "@/context/AppContext";
+import Tilt3D from "@/components/Tilt3D";
 
 export default function ExperienceAndEducation() {
+  const { t } = useApp();
+  const journey = t.journey;
   const [openIndex, setOpenIndex] = useState(0);
 
-  const faqs = [
-    {
-      question: "Professional Experience",
-      answer: [
-        "Software Engineer – Innovative-e Private Limited, Sri Lanka – March 2024 to May 2025",
-      ],
-    },
-    {
-      question: "Expertise Technologies",
-      answer: [
-        "React",
-        "React Native",
-        "Next.js",
-        "Node.js",
-        "Laravel",
-        "Django",
-        "MySQL",
-        "MongoDB",
-        "Arduino",
-      ],
-    },
-    {
-      question: "Education Qualifications",
-      answer: [
-        "MBA in Data Analytics and AI – Britts Imperial University College, Sharjah (Studying)",
-        "BEng (Hons) Software Engineering Top-up – London Metropolitan University (2023)",
-        "Higher National Diploma in Computing – Esoft Metro Campus (2021-2022)",
-      ],
-    },
-    {
-      question: "Languages",
-      answer: ["JavaScript", "TypeScript", "PHP", "Python", "C#", "C++"],
-    },
-  ];
-
-  const toggleFAQ = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black py-20 px-5 sm:px-10 md:px-20 xl:px-40">
-      {/* Background video */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-      >
-        <source
-          src="/background/2792967-uhd_2160_1440_25fps.mp4"
-          type="video/mp4"
-        />
-        Your browser does not support the video tag.
-      </video>
-
-      <div className="relative z-10 w-full">
-        <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-10 xl:gap-20">
-          {/* Left Image */}
+    <section className="section-shell relative flex items-center overflow-hidden py-20 px-5 sm:px-10 md:px-20 xl:px-40">
+      <div className="w-full">
+        <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-12 xl:gap-16">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true, amount: 0.25 }}
             className="w-full lg:w-1/2"
           >
-            <Image
-              src="/images/cute-astronaut-working-with-laptop-moon-with-star-cartoon-vector-icon-illustration-science-tech.png"
-              alt="Experience Illustration"
-              width={600}
-              height={400}
-              className="w-full rounded-xl object-cover shadow-xl"
-            />
+            <Tilt3D maxTilt={10} className="w-full">
+              <div className="relative neon-border overflow-hidden aspect-[4/3] bg-[var(--bg)]">
+                <Image
+                  src="/images/skills-journey-neon.png"
+                  alt={journey.imageAlt}
+                  fill
+                  sizes="(max-width: 1024px) 90vw, 480px"
+                  className="object-cover"
+                  priority={false}
+                />
+                <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--bg)]/50 via-transparent to-transparent" />
+                <span className="pointer-events-none absolute top-3 start-3 text-[10px] tracking-[0.2em] uppercase text-[var(--neon)] opacity-80"
+                  style={{ fontFamily: "var(--font-display), sans-serif" }}
+                >
+                  // SYS.CORE
+                </span>
+              </div>
+            </Tilt3D>
           </motion.div>
 
-          {/* Right Accordion */}
           <div className="w-full lg:w-1/2">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl md:text-5xl font-semibold text-white mb-8 text-center lg:text-left"
+              transition={{ duration: 0.4 }}
+              viewport={{ once: true }}
+              className="text-[var(--neon)] text-sm tracking-[0.2em] uppercase mb-3 text-center lg:text-start"
+              style={{ fontFamily: "var(--font-display), sans-serif" }}
             >
-              Skills & <span className="text-violet-600">Journey</span>
+              {journey.eyebrow}
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45 }}
+              viewport={{ once: true }}
+              className="text-3xl md:text-4xl lg:text-5xl font-semibold heading-fg mb-8 text-center lg:text-start"
+              style={{ fontFamily: "var(--font-display), sans-serif" }}
+            >
+              {journey.titleBefore}{" "}
+              <span className="neon-text">{journey.titleAccent}</span>
             </motion.h2>
 
-            <div className="space-y-6">
-              {faqs.map((faq, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  viewport={{ once: false, amount: 0.3 }}
-                  className={`border-b border-gray-200 pb-4 transition duration-300 ${
-                    openIndex === index ? "border-violet-600" : ""
+            <div className="space-y-2">
+              {journey.faqs.map((faq, index) => (
+                <div
+                  key={faq.question}
+                  className={`neon-panel px-4 py-3 transition-colors duration-300 ${
+                    openIndex === index ? "border-[var(--neon)]" : ""
                   }`}
                 >
                   <button
-                    onClick={() => toggleFAQ(index)}
-                    className="w-full flex justify-between items-center text-left"
+                    onClick={() =>
+                      setOpenIndex(openIndex === index ? null : index)
+                    }
+                    className="w-full flex justify-between items-center text-start gap-4"
                   >
-                    <h5
-                      className={`text-lg md:text-xl font-medium transition-colors duration-300 ${
+                    <h3
+                      className={`text-base md:text-lg font-medium transition-colors ${
                         openIndex === index
-                          ? "text-violet-600"
-                          : "text-white hover:text-violet-600"
+                          ? "text-[var(--neon)]"
+                          : "heading-fg"
                       }`}
                     >
                       {faq.question}
-                    </h5>
+                    </h3>
                     <motion.div
                       animate={{ rotate: openIndex === index ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.25 }}
                     >
                       <ChevronDown
-                        className={`w-6 h-6 transition-colors ${
-                          openIndex === index ? "text-violet-600" : "text-white"
+                        className={`w-5 h-5 shrink-0 ${
+                          openIndex === index
+                            ? "text-[var(--neon)]"
+                            : "text-[var(--muted)]"
                         }`}
                       />
                     </motion.div>
                   </button>
 
-                  <AnimatePresence>
+                  <AnimatePresence initial={false}>
                     {openIndex === index && (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.4 }}
-                        className="overflow-hidden mt-3"
+                        transition={{ duration: 0.28 }}
+                        className="overflow-hidden"
                       >
-                        <ul className="list-disc list-inside space-y-2 text-white text-sm md:text-base">
-                          {faq.answer.map((item, idx) => (
-                            <li key={idx}>{item}</li>
+                        <ul className="mt-3 mb-1 list-disc list-inside space-y-2 text-[var(--muted)] text-sm md:text-base">
+                          {faq.answer.map((item) => (
+                            <li key={item}>{item}</li>
                           ))}
                         </ul>
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
